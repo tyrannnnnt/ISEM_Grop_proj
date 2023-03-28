@@ -15,7 +15,16 @@ class Goods(object):
 
 
 class Customer(object):
-    def __init__(self, name, address, customerNum):
+    def addMallDollar(self, amount):
+        self.mallDollar += amount
+
+    def __init__(self, name, address, customerNum, mallDollar):
         self.name = name
         self.address = address
         self.customerNum = customerNum
+        self.mallDollar = mallDollar
+
+
+class Staff(object):
+    def __init__(self, staffNum):
+        self.staffNum = staffNum

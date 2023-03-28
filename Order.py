@@ -1,11 +1,12 @@
-import OrderNum
-import others
+from OrderNum import *
+from others import *
+
 
 # todo: ask VIP and VIPDay95 discount how much percent separately
 class Order(object):
     def calSubTotal(self):
         sum = 0.00
-        for i in self.orderList:
+        for i in self.goodsList:
             sum += i.getValue()
         return round(sum, 2)
 
@@ -17,16 +18,30 @@ class Order(object):
 
     def calDiscount(self):
         # todo: how much percent
-        return 0, 0
+        return 2, round(self.subTotal*0.95, 2)   # VIP, VIP95
 
     def calTotal(self):
         totalDis = self.VIPDis + self.VIP95Dis
         return self.subTotal - totalDis + self.calDeliveryFee()
 
-    def __init__(self, orderNum, orderDate, orderList, customer):
+    def calMallDollar(self):
+        if self.total >= 500:
+            return round(self.total * 0.002)
+        elif self.total >= 1000:
+            return round(self.total * 0.0025)
+        else:
+            return 0
+
+    def calHashTotal(self):
+        sum = 0
+        for i in self.goodsList:
+            sum += i.getGoodNum()
+        return sum
+
+    def __init__(self, orderNum, orderDate, goodsList, customer):
         self.orderNum = orderNum.getWholeNum()
         self.orderDate = orderDate
-        self.orderList = orderList
+        self.goodsList = goodsList
         self.customer = customer
         self.subTotal = self.calSubTotal()
         self.VIPDis, self.VIP95Dis = self.calDiscount()
