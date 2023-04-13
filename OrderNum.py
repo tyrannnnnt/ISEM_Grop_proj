@@ -1,8 +1,9 @@
+import random
 class OrderNum(object):
     def calDigitNum(self):
         sum = 0
-        for i in range(len(self.staffNum)):
-            sum += int(self.staffNum[i]) * int(self.seqNum[i])
+        for i in range(len(str(self.staffNum))):
+            sum += int(str(self.staffNum)[i]) * int(str(self.seqNum)[i])
         modulusNum = self.getModulusNum()
         for i in range(10):
             if (sum + i) % modulusNum == 0:
@@ -32,11 +33,11 @@ class OrderNum(object):
         alphabet = ""
         digitPart = ""
         # single alphabet
-        if len(self.lastOrderNum) == 16:
+        if len(self.lastOrderNum) == 18:
             alphabet = self.lastOrderNum[0]
             digitPart = self.lastOrderNum[8:14]
         # double alphabet
-        elif len(self.lastOrderNum) == 17:
+        elif len(self.lastOrderNum) == 19:
             alphabet = self.lastOrderNum[0:2]
             digitPart = self.lastOrderNum[9:15]
         else:
@@ -46,6 +47,9 @@ class OrderNum(object):
             return alphabet, str(int(digitPart) + 1)
         else:
             return self.nextChar(alphabet), "000001"
+
+    def randModulusChar(self):
+        return random.choice('ABC')
 
     def getAlphabet(self):
         return self.alphabet
@@ -66,16 +70,18 @@ class OrderNum(object):
         return self.checkDigit
 
     def getWholeNum(self):
-        return self.alphabet + self.staffNum + self.modulusChar + self.seqNum + self.itemNum + self.checkDigit
+        return str(self.alphabet) + str(self.staffNum) + str(self.modulusChar) + str(self.seqNum) + str(self.itemNum) + str(self.checkDigit)
 
     def __str__(self):
-        return self.alphabet + self.staffNum + self.modulusChar +\
-               self.seqNum + self.itemNum + "(" + self.checkDigit + ")"
+        return str(self.alphabet) + str(self.staffNum) \
+               + str(self.modulusChar) + str(self.seqNum) + str(self.itemNum) + "(" + str(self.checkDigit) + ")"
 
-    def __init__(self, lastOrderNum, staffNum, modulusChar, itemNum):
+    def __init__(self, lastOrderNum, staffNum, itemNum):
         self.lastOrderNum = lastOrderNum
         self.alphabet, self.seqNum = self.calNumber()
         self.staffNum = staffNum
-        self.modulusChar = modulusChar
+        self.modulusChar = self.randModulusChar()
         self.itemNum = itemNum
-        self.checkDigit = self.getCheckDigit()
+        self.checkDigit = self.calDigitNum()
+
+
