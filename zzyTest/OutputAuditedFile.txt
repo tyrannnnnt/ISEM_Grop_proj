@@ -1,0 +1,65 @@
+Number_of_orders          9
+Hash_total_of_orders      52
+Order 0 details
+---------------------Order_Number              A-567879
+Agency_number             234565
+Modulus_number            8
+Total                     8350.96
+Hash_total                10130
+
+Order 1 details
+---------------------Order_Number              A-567880
+Agency_number             234565
+Modulus_number            9
+Total                     3493.67
+Hash_total                3393
+
+Order 2 details
+---------------------Order_Number              A-567881
+Agency_number             234566
+Modulus_number            7
+Total                     3493.67
+Hash_total                3393
+
+Order 3 details
+---------------------Order_Number              A-567882
+Agency_number             234567
+Modulus_number            7
+Total                     3493.67
+Hash_total                3393
+
+Order 4 details
+---------------------Order_Number              A-567883
+Agency_number             234568
+Modulus_number            9
+Total                     3493.67
+Hash_total                3393
+
+Order 5 details
+---------------------Order_Number              A-567884
+Agency_number             234569
+Modulus_number            9
+Total                     3493.67
+Hash_total                3393
+
+Order 6 details
+---------------------Order_Number              A-567885
+Agency_number             234570
+Modulus_number            8
+Total                     3493.67
+Hash_total                3393
+
+Order 7 details
+---------------------Order_Number              A-567886
+Agency_number             234571
+Modulus_number            7
+Total                     3493.67
+Hash_total                3393
+
+Order 8 details
+---------------------Order_Number              A-567887
+Agency_number             234572
+Modulus_number            9
+Total                     3493.67
+Hash_total                3393
+
