@@ -8,7 +8,7 @@ import numpy as np
 
 
 def readCustomer(fileName):
-    '''Read in the customer names from excel'''
+    """Read in the customer names from excel"""
     customerFile = pd.read_excel(fileName)
     data = customerFile.values
     storeList = []
@@ -19,7 +19,7 @@ def readCustomer(fileName):
 
 
 def readStaff(fileName):
-    '''Read in the staff names from excel'''
+    """Read in the staff names from excel"""
     staffFile = pd.read_excel(fileName)
     data = staffFile.values
     storeList = []
