@@ -1,4 +1,6 @@
 import random
+
+
 class OrderNum(object):
     """This is a new object class: order number
 

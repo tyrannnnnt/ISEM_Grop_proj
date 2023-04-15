@@ -1,4 +1,6 @@
 import math
+
+
 class Goods(object):
     """This is a new object class: goods
        It includes several get and set functions 
@@ -131,6 +133,9 @@ class Customer(object):
         """
         self.name = name
         self.address = address
+        if len(str(customerNum)) != 6 or not str(customerNum).isdigit():
+            print("Invalid input customer number format. Please Check!. " + customerNum)
+            exit(1)
         self.customerNum = customerNum
         self.mallDollar = mallDollar
 
