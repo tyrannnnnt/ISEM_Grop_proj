@@ -1,5 +1,3 @@
-from OrderNum import *
-from others import *
 from datetime import datetime
 import pandas as pd
 

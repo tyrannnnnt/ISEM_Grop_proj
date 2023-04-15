@@ -4,7 +4,6 @@ from Order import *
 from OrderNum import *
 from others import *
 import pandas as pd
-import numpy as np
 
 
 def readCustomer(fileName):
@@ -173,6 +172,12 @@ try:
 except IOError:
     print(IOError)
     exit(1)
+except ValueError:
+    print(ValueError)
+    exit(1)
+except Exception:
+    print(Exception)
+    exit(1)
 
 isExit = False
 while not isExit:
@@ -181,31 +186,102 @@ while not isExit:
                         "2. Output audited file\n"
                         "3. Output detail of All orders\n"
                         "4. Output detail information of specific order Number\n"
-                        "5. Print all Uncomplete Order(In Transit and not delivered)\n"
-                        "6. Exit\n")
+                        "5. Print all Uncompleted Order(In Transit and not delivered)\n"
+                        "6. Load another Customer file(It will cover the original one!)\n"
+                        "7. Load another Staff file(It will cover the original one!)\n"
+                        "8. Load another Order file(It will cover the original one!)\n"
+                        "9. Exit\n")
 
     if instruction == "1":
         path = input("Please input the expect path, "
-                     "if you input -1, the path will be defalut: zzyTest/OutputLastOrderFile.txt\n")
-        if path != "-1":
-            printLastOrderFile(theOrderList, path)
-        else:
-            printLastOrderFile(theOrderList)
+                     "if you input -1, the path will be default: zzyTest/OutputLastOrderFile.txt\n")
+        try:
+            if path != "-1":
+                printLastOrderFile(theOrderList, path)
+            else:
+                printLastOrderFile(theOrderList)
+            print("The Last Order file has been output!\n")
+        except IOError:
+            print(IOError)
+        except ValueError:
+            print(ValueError)
+        except Exception:
+            print(Exception)
+
     elif instruction == "2":
         path = input("Please input the expect path, "
-                     "if you input -1, the path will be defalut: zzyTest/OutputLastOrderFile.txt\n")
-        if path != "-1":
-            printAuditedFile(theOrderList, path)
-        else:
-            printAuditedFile(theOrderList)
+                     "if you input -1, the path will be default: zzyTest/OutputAuditedFile.txt\n")
+        try:
+            if path != "-1":
+                printAuditedFile(theOrderList, path)
+            else:
+                printAuditedFile(theOrderList)
+            print("The audited file has been output!\n")
+        except IOError:
+            print(IOError)
+        except ValueError:
+            print(ValueError)
+        except Exception:
+            print(Exception)
+
     elif instruction == "3":
         printAllOrder(theOrderList)
+
     elif instruction == "4":
         findOrder = input("Please input the order number you want to search(please include the () of the digit): \n")
-        searchOrder(findOrder, theOrderList)
+        try:
+            searchOrder(findOrder, theOrderList)
+        except ValueError:
+            print(ValueError)
+        except Exception:
+            print(Exception)
+
     elif instruction == "5":
         printAllUnComplete(theOrderList)
+
     elif instruction == "6":
+        path = input("Please input the expect path, "
+                     "if you input -1, the path will be default: zzyTest/Customer.xlsx\n")
+        if path == "-1":
+            path = "zzyTest/Customer.xlsx"
+        try:
+            theCustomerList = readCustomer(path)
+        except IOError:
+            print(IOError)
+        except ValueError:
+            print(ValueError)
+        except Exception:
+            print(Exception)
+
+    elif instruction == "7":
+        path = input("Please input the expect path, "
+                     "if you input -1, the path will be default: zzyTest/Staff.xlsx\n")
+        if path == "-1":
+            path = "zzyTest/Staff.xlsx"
+        try:
+            theStaffList = readStaff(path)
+        except IOError:
+            print(IOError)
+        except ValueError:
+            print(ValueError)
+        except Exception:
+            print(Exception)
+
+    elif instruction == "8":
+        path = input("Please input the expect path, "
+                     "if you input -1, the path will be default: zzyTest/Order.xlsx\n")
+        if path == "-1":
+            path = "zzyTest/Order.xlsx"
+        try:
+            theOrderList = readOrder(path, theGoodsList, theCustomerList)
+        except IOError:
+            print(IOError)
+        except ValueError:
+            print(ValueError)
+        except Exception:
+            print(Exception)
+
+    elif instruction == "9":
         isExit = True
     else:
         print("Invalid input instruction number, please check!")

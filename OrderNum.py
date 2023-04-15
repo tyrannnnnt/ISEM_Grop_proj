@@ -1,9 +1,11 @@
 import random
+
+
 class OrderNum(object):
     def calDigitNum(self):
         sum = 0
         for i in range(len(str(self.staffNum))):
-            sum += int(str(self.staffNum)[i]) * int(str(self.seqNum)[i])
+            sum = sum + int(str(self.staffNum)[i]) * int(str(self.seqNum)[i])
         modulusNum = self.getModulusNum()
         for i in range(10):
             if (sum + i) % modulusNum == 0:
