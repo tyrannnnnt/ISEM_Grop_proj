@@ -1,6 +1,7 @@
 from datetime import datetime
 import pandas as pd
 
+
 # A new class order
 class Order(object):
     def calSubTotal(self):
@@ -107,6 +108,7 @@ class Order(object):
                "The order profit: " + str(self.profit) + "\n" + \
                "The payment method: " + str(self.paymentMethod) + "\n" + \
                "The payment collection: " + str(self.paymentCollection) + "\n" + \
+               "The profit of the order: " + str(self.profit) + \
                "Delivered or not: " + str(self.delivered) + "\n" + \
                "Complete or not: " + str(self.getCompleteStr()) + "\n" + \
                "-------------------------------------------------------------------------\n"
