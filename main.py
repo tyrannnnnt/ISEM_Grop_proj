@@ -8,7 +8,14 @@ import traceback
 
 
 def readCustomer(fileName):
-    """Read in the customer names from excel"""
+    """Read in the customer names from excel
+    
+    Args:
+        fileName(string): the file to read
+
+    Returns:
+        list: customers
+    """
     customerFile = pd.read_excel(fileName)
     data = customerFile.values
     storeList = []
@@ -19,7 +26,14 @@ def readCustomer(fileName):
 
 
 def readStaff(fileName):
-    """Read in the staff names from excel"""
+    """Read in the staff names from excel
+    
+    Args:
+        fileName(string): the file to read
+
+    Returns:
+        list: staffs
+    """
     staffFile = pd.read_excel(fileName)
     data = staffFile.values
     storeList = []
@@ -30,6 +44,14 @@ def readStaff(fileName):
 
 
 def readGoods(fileName):
+    """Read in the item list
+    
+    Args:
+        fileName(string): the file to read
+
+    Returns:
+        list: items
+    """
     goodsFile = pd.read_excel(fileName)
     data = goodsFile.values
     totalGoodsList = []
@@ -40,6 +62,16 @@ def readGoods(fileName):
 
 
 def matchName(name, totalList):
+    """ Check if the name can match with the list
+
+    Args:
+        name (string): the name to search
+        totalList (list): the total list
+
+    Returns:
+        element in list: the matched information
+        error message: if not matched    
+    """
     for i in range(len(totalList)):
         if totalList[i].getName() == name:
             return totalList[i]
@@ -47,6 +79,16 @@ def matchName(name, totalList):
 
 
 def matchNumber(number, totalList):
+    """Check if the number can match with the list
+
+    Args:
+        number (int): the number to search
+        totalList (list): the total list
+
+    Returns:
+        element in list: the matched information
+        error message: if not matched
+    """
     for i in range(len(totalList)):
         if str(totalList[i].getNumber()) == str(number):
             return totalList[i]
@@ -54,6 +96,16 @@ def matchNumber(number, totalList):
 
 
 def findCustomer(customerNumber, totalList):
+    """This function can be used to look for a customer
+    
+    Args:
+        customerNumber: the customer to search
+        totalList: the total list
+
+    Returns:
+        element in list: name and address
+        error message: if not found
+    """
     for i in range(len(totalList)):
         if str(totalList[i].getNumber()) == str(customerNumber):
             return totalList[i].getName(), totalList[i].getAddress()
@@ -61,10 +113,29 @@ def findCustomer(customerNumber, totalList):
 
 
 def copyGood(good):
+    """This function can be used to copy goods
+       If the items are copied directly, they may be stored at the same address in the computer although showed in two lists. 
+       When one is changed, the other one may also be changed. This copy function is to create another storage space for the 
+       copied items so that the quantity will not be interferred.
+
+    Args:
+        good (good): item to be copied
+
+    Returns:
+        good: the copied good
+    """
     return Goods(good.getName(), good.getValue(), int(good.getNumber()), int(good.getCost()))
 
 
 def calNewHashTotal(storeList):
+    """Calculate the new hash total
+
+    Args:
+        storeList (list): the list
+
+    Returns:
+        float: total price
+    """
     total = 0
     for i in range(len(storeList)):
         total = total + storeList[i].calNewHashTotal()
@@ -72,6 +143,16 @@ def calNewHashTotal(storeList):
 
 
 def readOrder(fileName, totalGoodsList, customerList):
+    """Read in the order information
+
+    Args:
+        fileName (file): file to read
+        totalGoodsList (list): the item list
+        customerList (list): the customer name list
+
+    Returns:
+        _type_: _description_
+    """
     orderFile = pd.read_excel(fileName)
     data = orderFile.values
     lastOrderNum = data[0][0]
@@ -123,12 +204,24 @@ def readOrder(fileName, totalGoodsList, customerList):
 
 
 def printLastOrderFile(orderList, pathL="zzyTest/OutputLastOrderFile.txt"):
+    """Print the last order into a file
+
+    Args:
+        orderList (list): the orders
+        pathL (str): the path to print. Defaults to "zzyTest/OutputLastOrderFile.txt".
+    """
     file = open(pathL, "w")
     file.write(orderList[-1].getOrderNumber())
     file.close()
 
 
 def printAuditedFile(orderList, pathA="zzyTest/OutputAuditedFile.txt"):
+    """This is the print function Will first set a new path and print out into a txt document
+
+    Args:
+        orderList (list): the orders
+        pathA (str): the path to print. Defaults to "zzyTest/OutputAuditedFile.txt".
+    """
     file = open(pathA, "w")
     file.write("%-25s %d\n" % ("Number_of_orders", len(orderList)))
     file.write("%-25s %d\n" % ("Hash_total_of_orders", calNewHashTotal(orderList)))
@@ -145,12 +238,22 @@ def printAuditedFile(orderList, pathA="zzyTest/OutputAuditedFile.txt"):
 
 
 def printAllOrder(orderList):
+    """This prints out all the orders with a loop
+
+    Args:
+        orderList (list): the orders
+    """
     for i in orderList:
         print("-------------------------------------------------------------------------\n")
         print(i)
 
 
 def printAllUnComplete(orderList):
+    """This prints out all the uncomplete orders
+
+    Args:
+        orderList (list): the orders
+    """
     for i in orderList:
         if str(i.getComplete()) == "-1":
             print("-------------------------------------------------------------------------\n")
@@ -158,6 +261,13 @@ def printAllUnComplete(orderList):
 
 
 def searchOrder(orderNum, orderList):
+    """This can be used to search for an order.
+       If found, print out. If not, return error message.
+
+    Args:
+        orderNum (int): the order to search
+        orderList (list): the orders
+    """
     for i in orderList:
         if str(i.getOrderNumber()) == orderNum:
             print(i)
@@ -180,6 +290,9 @@ except ValueError:
     exit(1)
 
 
+
+    """Read user input to select the operations
+    """
 isExit = False
 while not isExit:
     instruction = input("Please input the instruction: \n"
@@ -195,6 +308,8 @@ while not isExit:
                         "10. Exit\n")
 
     if instruction == "1":
+        """Call print last order function
+        """
         path = input("Please input the expect path, "
                      "if you input -1, the path will be default: zzyTest/OutputLastOrderFile.txt\n")
         try:
@@ -215,6 +330,8 @@ while not isExit:
             continue
 
     elif instruction == "2":
+        """Call print audited file function
+        """
         path = input("Please input the expect path, "
                      "if you input -1, the path will be default: zzyTest/OutputAuditedFile.txt\n")
         try:
@@ -235,9 +352,12 @@ while not isExit:
             continue
 
     elif instruction == "3":
+        """Call print all order function
+        """
         printAllOrder(theOrderList)
-
     elif instruction == "4":
+        """Search the order and print out the information of the order
+        """
         findOrder = input("Please input the order number you want to search(please include the () of the digit): \n")
         try:
             searchOrder(findOrder, theOrderList)
@@ -248,6 +368,8 @@ while not isExit:
             continue
 
     elif instruction == "5":
+        """Print all Uncompleted Order
+        """
         printAllUnComplete(theOrderList)
 
     elif instruction == "6":
