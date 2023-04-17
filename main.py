@@ -314,7 +314,7 @@ while not isExit:
                         "1. Output last order file\n"
                         "2. Output audited file\n"
                         "3. Output detail of All orders\n"
-                        "4. Output detail information of specific order Number\n"
+                        "4. Output detail information of specific Invoice Number\n"
                         "5. Print all Uncompleted Order(In Transit and not delivered)\n"
                         "6. Load another Customer file(It will cover the original one!)\n"
                         "7. Load another Staff file(It will cover the original one!)\n"

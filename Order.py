@@ -195,7 +195,7 @@ class Order(object):
         Initialize all the information in the order
 
         Args:
-            orderNum (string): order number
+            orderNum (Object): order number
             orderDate (string): the date of the order
             goodsList (string list): the items in an order
             customer (string): the customer name
