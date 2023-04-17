@@ -89,6 +89,7 @@ class Order(object):
         cost = 0
         for i in self.goodsList:
             cost = cost + (int(i.getCost()) * int(i.getQuan()))
+        cost = cost - self.deliveryFee - self.VIPDis - self.VIP95Dis
         return round(self.total - cost, 2)
 
     def calComplete(self):
@@ -154,9 +155,9 @@ class Order(object):
             completion status in String format
         """
         if self.isComplete == -1:
-            return "UnComplete"
+            return "UnCompleted"
         else:
-            return "returnComplete"
+            return "Complete"
 
     def __str__(self):
         """The information contained in the orders: 
@@ -165,7 +166,7 @@ class Order(object):
 
             Bonus part:
             Profit: shows how much profit this order can make for the company
-            Deliveryy status: shows the delivery status of the order
+            Delivery status: shows the delivery status of the order
             Payment status: shows whether the payment is completed
             Completion status: If the order is paid and delivered, it is completed.
 
@@ -185,7 +186,7 @@ class Order(object):
                "The order profit: " + str(self.profit) + "\n" + \
                "The payment method: " + str(self.paymentMethod) + "\n" + \
                "The payment collection: " + str(self.paymentCollection) + "\n" + \
-               "The profit of the order: " + str(self.profit) + \
+               "The profit of the order: " + str(self.profit) + "\n" +\
                "Delivered or not: " + str(self.delivered) + "\n" + \
                "Complete or not: " + str(self.getCompleteStr()) + "\n" + \
                "-------------------------------------------------------------------------\n"

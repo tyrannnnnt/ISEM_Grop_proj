@@ -205,7 +205,8 @@ def readOrder(fileName, totalGoodsList, customerList):
                     orderGoods.append(theGood)
             except ValueError:
                 print(ValueError)
-                print("Please check your data in last order number, staff number and item number. It cannot be empty or in wrong format")
+                print(
+                    "Please check your data in last order number, staff number and item number. It cannot be empty or in wrong format")
                 exit(1)
             except IndexError:
                 print(IndexError)
@@ -290,6 +291,16 @@ def searchOrder(orderNum, orderList):
     print("The Order Number " + orderNum + " is not found")
 
 
+def printCustomerList(customerList, pathC="zzyTest/OutputCustomerFile.txt"):
+    file = open(pathC, "w")
+    file.write("%-25s %d\n" % ("Number_of_customers", len(customerList)))
+    file.write("%-25s %s\n" % ("Customer Name", "Customer Address"))
+    file.write("---------------------\n")
+    for i in range(len(customerList)):
+        file.write("%-25s %s\n" % (customerList[i].getName(), customerList[i].getAddress()))
+    file.close()
+
+
 try:
     theCustomerList = readCustomer("zzyTest/Customer.xlsx")
     theStaffList = readStaff("zzyTest/Staff.xlsx")
@@ -303,8 +314,6 @@ except ValueError:
     print(ValueError)
     traceback.print_exc()
     exit(1)
-
-
 
     """Read user input to select the operations
     """
@@ -320,7 +329,8 @@ while not isExit:
                         "7. Load another Staff file(It will cover the original one!)\n"
                         "8. Load another Order file(It will cover the original one!)\n"
                         "9. Load another Goods file(It will cover the original one!)\n"
-                        "10. Exit\n")
+                        "10. Prepare customer list for logistic company\n"
+                        "11. Exit\n")
 
     if instruction == "1":
         """Call print last order function
@@ -460,6 +470,24 @@ while not isExit:
             continue
 
     elif instruction == "10":
+        path = input("Please input the expect path, "
+                     "if you input -1, the path will be default: zzyTest/OutputCustomerFile.xlsx\n")
+        if path == "-1":
+            path = "zzyTest/OutputCustomerFile.xlsx"
+        try:
+            printCustomerList(theCustomerList, path)
+        except IOError:
+            print(IOError.args)
+            traceback.print_exc()
+            print("\n")
+            continue
+        except ValueError:
+            print(ValueError)
+            traceback.print_exc()
+            print("\n")
+            continue
+
+    elif instruction == "11":
         isExit = True
     else:
         print("Invalid input instruction number, please check!")
