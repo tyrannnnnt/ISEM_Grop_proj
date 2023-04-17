@@ -200,6 +200,7 @@ def readOrder(fileName, totalGoodsList, customerList):
             # orderNum, orderDate, goodsList, Customer
             storeList.append(Order(newOrder, data[i][3], orderGoods, matchNumber(data[i][4], customerList),
                                    data[i][5], data[i][6], data[i][7]))
+            count = count + 1
     return storeList
 
 
