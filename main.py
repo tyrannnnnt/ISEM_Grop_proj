@@ -175,7 +175,12 @@ def readOrder(fileName, totalGoodsList, customerList):
                     theGood = copyGood(matchNumber(identity, totalGoodsList))
                 else:
                     theGood = copyGood(matchName(identity, totalGoodsList))
-                theGood.setQuan(j.rsplit(" ", 1)[1])
+                    try:
+                        theGood.setQuan(j.rsplit(" ", 1)[1])
+                    except IndexError:
+                        print(IndexError)
+                        print(" Please make sure your input file format is correct.")
+                        exit(1)
                 orderGoods.append(theGood)
             # orderNum, orderDate, goodsList, Customer, paymentMethod, paymentCollection, delivered
             storeList.append(Order(newOrder, data[i][3], orderGoods, matchNumber(data[i][4], customerList),
@@ -186,17 +191,26 @@ def readOrder(fileName, totalGoodsList, customerList):
         if length > 0:
             goodsList.append(items[(index * 9):])
             # lastOrderNum, staffNum, itemNum
-            newOrder = OrderNum(lastOrderNum, data[i][1], len(goodsList[count]))
-            lastOrderNum = str(newOrder)
-            orderGoods = []
-            for j in goodsList[count]:
-                identity = j.rsplit(" ", 1)[0]
-                if identity.isdigit():
-                    theGood = copyGood(matchNumber(identity, totalGoodsList))
-                else:
-                    theGood = copyGood(matchName(identity, totalGoodsList))
-                theGood.setQuan(j.rsplit(" ", 1)[1])
-                orderGoods.append(theGood)
+            try:
+                newOrder = OrderNum(lastOrderNum, data[i][1], len(goodsList[count]))
+                lastOrderNum = str(newOrder)
+                orderGoods = []
+                for j in goodsList[count]:
+                    identity = j.rsplit(" ", 1)[0]
+                    if identity.isdigit():
+                        theGood = copyGood(matchNumber(identity, totalGoodsList))
+                    else:
+                        theGood = copyGood(matchName(identity, totalGoodsList))
+                    theGood.setQuan(j.rsplit(" ", 1)[1])
+                    orderGoods.append(theGood)
+            except ValueError:
+                print(ValueError)
+                print("Please check your data in last order number, staff number and item number. It cannot be empty or in wrong format")
+                exit(1)
+            except IndexError:
+                print(IndexError)
+                print("Please check your staff number or customer number. It cannot be empty or in wrong format")
+                exit(1)
             # orderNum, orderDate, goodsList, Customer
             storeList.append(Order(newOrder, data[i][3], orderGoods, matchNumber(data[i][4], customerList),
                                    data[i][5], data[i][6], data[i][7]))
