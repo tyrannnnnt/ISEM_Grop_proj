@@ -16,7 +16,7 @@ def readCustomer(fileName):
     Returns:
         list: customers
     """
-    customerFile = pd.read_excel(fileName)
+    customerFile = pd.read_excel(fileName, engine='openpyxl')
     data = customerFile.values
     storeList = []
     for i in range(customerFile.shape[0]):
@@ -34,7 +34,7 @@ def readStaff(fileName):
     Returns:
         list: staffs
     """
-    staffFile = pd.read_excel(fileName)
+    staffFile = pd.read_excel(fileName, engine='openpyxl')
     data = staffFile.values
     storeList = []
     for i in range(staffFile.shape[0]):
@@ -52,7 +52,7 @@ def readGoods(fileName):
     Returns:
         list: items
     """
-    goodsFile = pd.read_excel(fileName)
+    goodsFile = pd.read_excel(fileName, engine='openpyxl')
     data = goodsFile.values
     totalGoodsList = []
     for i in range(goodsFile.shape[0]):
@@ -153,7 +153,7 @@ def readOrder(fileName, totalGoodsList, customerList):
     Returns:
         _type_: _description_
     """
-    orderFile = pd.read_excel(fileName)
+    orderFile = pd.read_excel(fileName, engine='openpyxl')
     data = orderFile.values
     lastOrderNum = data[0][0]
     goodsList = []
