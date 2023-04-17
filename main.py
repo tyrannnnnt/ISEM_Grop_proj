@@ -18,13 +18,13 @@ import traceback
 
 
 def readCustomer(fileName):
-    """Read in the customer names from excel
+    """Read in the customer information from the input path (Excel file)
     
     Args:
         fileName(string): the file path to read
 
     Returns:
-        list: customers
+        list: list of Customer, storing customers' information with structured data
     """
     # read the Excel file
     customerFile = pd.read_excel(fileName, engine='openpyxl')
@@ -38,13 +38,13 @@ def readCustomer(fileName):
 
 
 def readStaff(fileName):
-    """Read in the staff names from excel
+    """Read in the staff information from the input path (Excel file)
     
     Args:
         fileName(string): the file path to read
 
     Returns:
-        list: staffs
+        list: list of Staff, storing staffs' information with structured data
     """
     # read the Excel file
     staffFile = pd.read_excel(fileName, engine='openpyxl')
@@ -58,13 +58,13 @@ def readStaff(fileName):
 
 
 def readGoods(fileName):
-    """Read in the item list
-    
+    """Read in the goods information from the input path (Excel file)
+
     Args:
         fileName(string): the file path to read
 
     Returns:
-        list: items
+        list: list of Goods, storing goods' information with structured data
     """
     # read Excel file
     goodsFile = pd.read_excel(fileName, engine='openpyxl')
@@ -78,15 +78,15 @@ def readGoods(fileName):
 
 
 def matchName(name, totalList):
-    """ Check if the name can match with the list
+    """ Find and return the object in the totalList with the same name with the input name
 
     Args:
         name (string): the name to search
-        totalList (list): the total list
+        totalList (list): the total list containing the name
 
     Returns:
-        element in list: the matched information
-        error message: if not matched    
+        element in list: the object matched information with the input name
+        error message: if it cannot find the corresponding object, print the error message
     """
     for i in range(len(totalList)):
         if totalList[i].getName() == name:
@@ -95,16 +95,16 @@ def matchName(name, totalList):
 
 
 def matchNumber(number, totalList):
-    """Check if the number can match with the list
+    """ Find and return the object in the totalList with the same number with the input name
 
-    Args:
-        number (int): the number to search
-        totalList (list): the total list
+        Args:
+            number (string): the number to search
+            totalList (list): the total list containing the number
 
-    Returns:
-        element in list: the matched information
-        error message: if not matched
-    """
+        Returns:
+            element in list: the object matched information with the input number
+            error message: if it cannot find the corresponding object, print the error message
+        """
     for i in range(len(totalList)):
         if str(totalList[i].getNumber()) == str(number):
             return totalList[i]
@@ -112,15 +112,16 @@ def matchNumber(number, totalList):
 
 
 def findCustomer(customerNumber, totalList):
-    """This function can be used to look for a customer
+    """This function can be used to look for a customer according to the input customer number in the totalList of the
+    customer.
     
     Args:
-        customerNumber: the customer to search
-        totalList: the total list
+        customerNumber: the customer number need to search
+        totalList: the total list storing the customer
 
     Returns:
-        element in list: name and address
-        error message: if not found
+        object information: name and address of the found object
+        error message: if it not found the customer in the totalList has the same customer number
     """
     for i in range(len(totalList)):
         if str(totalList[i].getNumber()) == str(customerNumber):
@@ -128,29 +129,29 @@ def findCustomer(customerNumber, totalList):
     print("The customer number do not exist, please check!" + str(customerNumber))
 
 
-def copyGood(good):
-    """This function can be used to copy goods
+def copyGoods(goods):
+    """This function can be used to do the deep copy of Goods Object
        If the items are copied directly, they may be stored at the same address in the computer although showed in two lists. 
        When one is changed, the other one may also be changed. This copy function is to create another storage space for the 
-       copied items so that the quantity will not be interferred.
+       copied items so that the quantity will not be interfered.
 
     Args:
-        good (good): item to be copied
+        goods (goods): item need to be deep copied
 
     Returns:
-        good: the copied good
+        goods: the copied goods
     """
-    return Goods(good.getName(), good.getValue(), int(good.getNumber()), int(good.getCost()))
+    return Goods(goods.getName(), goods.getValue(), int(goods.getNumber()), int(goods.getCost()))
 
 
 def calNewHashTotal(storeList):
-    """Calculate the new hash total
+    """Calculate the new hash total by adding each of the NewHashTotal in the order object.
 
     Args:
-        storeList (list): the list
+        storeList (list): the list store the orders
 
     Returns:
-        float: total price
+        int: new hash total of the order list
     """
     total = 0
     for i in range(len(storeList)):
@@ -159,15 +160,15 @@ def calNewHashTotal(storeList):
 
 
 def readOrder(fileName, totalGoodsList, customerList):
-    """Read in the order information
+    """Read in the order information from the input path (Excel file)
 
     Args:
-        fileName (file): file to read
-        totalGoodsList (list): the item list
-        customerList (list): the customer name list
+        fileName(string): the file path to read
+        totalGoodsList(list): all goods list
+        customerList(list): all customer list
 
     Returns:
-        _type_: _description_
+        list: list of Order object, storing the information of the order
     """
     # read file from the Excel
     orderFile = pd.read_excel(fileName, engine='openpyxl')
@@ -186,13 +187,13 @@ def readOrder(fileName, totalGoodsList, customerList):
         items = data[i][2].replace(", ", ",").split(",")
         length = len(items)
         index = 0
-        if(data[i][5] != 'Credit Card' and data[i][5] != 'FPS' and data[i][5] != 'E Wallet' and data[i][5] != 'Mobile'):
+        if data[i][5] != 'Credit Card' and data[i][5] != 'FPS' and data[i][5] != 'E Wallet' and data[i][5] != 'Mobile':
             print("Caution! Please input valid payment method")
             exit()
-        if(data[i][6] != 'In Transit' and data[i][6] != 'Received'):
+        if data[i][6] != 'In Transit' and data[i][6] != 'Received':
             print("Caution! The payment status should be either in transition or received")
             exit()
-        if(data[i][7] != 'F' and data[i][7] != 'T'):
+        if data[i][7] != 'F' and data[i][7] != 'T':
             print("Caution! The status of delivery should be either true or false")
             exit()
         # if there are more than 9 goods in the order
@@ -208,11 +209,11 @@ def readOrder(fileName, totalGoodsList, customerList):
                 identity = j.rsplit(" ", 1)[0]
                 # if is goods number
                 if identity.isdigit():
-                    theGood = copyGood(matchNumber(identity, totalGoodsList))
+                    theGood = copyGoods(matchNumber(identity, totalGoodsList))
                 # if is goods name
                 else:
                     # do the deep copy
-                    theGood = copyGood(matchName(identity, totalGoodsList))
+                    theGood = copyGoods(matchName(identity, totalGoodsList))
                     try:
                         theGood.setQuan(j.rsplit(" ", 1)[1])
                     except IndexError:
@@ -238,9 +239,9 @@ def readOrder(fileName, totalGoodsList, customerList):
                 for j in goodsList[count]:
                     identity = j.rsplit(" ", 1)[0]
                     if identity.isdigit():
-                        theGood = copyGood(matchNumber(identity, totalGoodsList))
+                        theGood = copyGoods(matchNumber(identity, totalGoodsList))
                     else:
-                        theGood = copyGood(matchName(identity, totalGoodsList))
+                        theGood = copyGoods(matchName(identity, totalGoodsList))
                     theGood.setQuan(j.rsplit(" ", 1)[1])
                     orderGoods.append(theGood)
             except ValueError:
@@ -260,10 +261,10 @@ def readOrder(fileName, totalGoodsList, customerList):
 
 
 def printLastOrderFile(orderList, pathL="zzyTest/OutputLastOrderFile.txt"):
-    """Print the last order into a file
+    """Print the last order number into the file
 
     Args:
-        orderList (list): the orders
+        orderList (list): the list storing all orders
         pathL (str): the path to print. Defaults to "zzyTest/OutputLastOrderFile.txt".
     """
     file = open(pathL, "w")
@@ -272,10 +273,10 @@ def printLastOrderFile(orderList, pathL="zzyTest/OutputLastOrderFile.txt"):
 
 
 def printAuditedFile(orderList, pathA="zzyTest/OutputAuditedFile.txt"):
-    """This is the print function Will first set a new path and print out into a txt document
+    """This is the print function will create or overwrite the text document with the audited information
 
     Args:
-        orderList (list): the orders
+        orderList (list): the list storing all orders
         pathA (str): the path to print. Defaults to "zzyTest/OutputAuditedFile.txt".
     """
     file = open(pathA, "w")
@@ -294,10 +295,10 @@ def printAuditedFile(orderList, pathA="zzyTest/OutputAuditedFile.txt"):
 
 
 def printAllOrder(orderList):
-    """This prints out all the orders with a loop
+    """This prints out all orders' information with a loop
 
     Args:
-        orderList (list): the orders
+        orderList (list): the list storing all orders
     """
     for i in orderList:
         print("-------------------------------------------------------------------------\n")
@@ -305,10 +306,10 @@ def printAllOrder(orderList):
 
 
 def printAllUnComplete(orderList):
-    """This prints out all the uncomplete orders
+    """This prints out all the uncompleted orders
 
     Args:
-        orderList (list): the orders
+        orderList (list): the list storing all orders
     """
     for i in orderList:
         if str(i.getComplete()) == "-1":
@@ -317,12 +318,12 @@ def printAllUnComplete(orderList):
 
 
 def searchOrder(orderNum, orderList):
-    """This can be used to search for an order.
-       If found, print out. If not, return error message.
+    """This can be used to search for an order according to the input order number.
+       If found, print out. If not, print error message.
 
     Args:
-        orderNum (int): the order to search
-        orderList (list): the orders
+        orderNum (string): the order number to search
+        orderList (list): the list storing all orders
     """
     for i in orderList:
         if str(i.getOrderNumber()) == orderNum:
@@ -355,7 +356,8 @@ except ValueError:
     traceback.print_exc()
     exit(1)
 
-    """Read user input to select the operations
+    """
+    Read user input to select the operations
     """
 isExit = False
 while not isExit:

@@ -3,6 +3,8 @@ Group A member:
 CHENG MIN HSIU  19203144
 ZHANG Jiayi     19250568
 LIU Yulin       20250541
+This is the file containing Class Goods, Customer, and Staff. They store the specific value separately with the function
+set and get.
 """
 import math
 

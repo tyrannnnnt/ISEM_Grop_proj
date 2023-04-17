@@ -4,7 +4,7 @@ CHENG MIN HSIU  19203144
 ZHANG Jiayi     19250568
 LIU Yulin       20250541
 This file including the Class of order, it stores the information contained in the input order file. It contains some
-functions
+functions calculating money amount, calculating digits and other specific functions.
 """
 
 from datetime import datetime
@@ -12,14 +12,13 @@ import pandas as pd
 
 
 class Order(object):
-    """A new object class: order
-
-    Args:
-        order (object): This is a new type of object. It contains functions to calculate sub total, delivery fee, total discount, total price, mall dollar, hashtotal,
-        new hash total, profit, completion status.
+    """
+    The Order Class storing the information of each order. Including functions of calculating money amount, check digits,
+    judge statements and specific set and get functions.
     """
     def calSubTotal(self):
-        """Calculate the total price of the goods
+        """
+        Calculate the subtotal price of the goods. Do the addition of each goods value * goods quantity.
 
         Returns:
             subtotal in float number with 2 decimal places
@@ -30,7 +29,10 @@ class Order(object):
         return round(sum, 2)
 
     def calDeliveryFee(self):
-        """Calculate the delivery fee depending on the subTotal
+        """
+        Calculate the delivery fee depending on the subTotal. If the subtotal bigger than 500, make it to zero. Else,
+        make it 5% of the subtotal
+
 
         Returns:
             delivery fee in float number with 2 decimal places
@@ -41,7 +43,8 @@ class Order(object):
             return round(0.05 * self.subTotal, 2)
 
     def calDiscount(self):
-        """Calculate the discount
+        """
+        Calculate the discounts of VIP(0.5%) and VIP95(5%)
 
         Returns:
             discount in float number with 2 decimal places
@@ -49,7 +52,8 @@ class Order(object):
         return round(self.subTotal * 0.005, 2), round(self.subTotal * 0.05, 2)  # VIP(0.5%), VIP95(5%)
 
     def calTotal(self):
-        """Calculate the total price. Subtotal - all the discounts
+        """
+        Calculate the total price. Subtotal - all the discounts
 
         Returns:
             total price
@@ -58,7 +62,8 @@ class Order(object):
         return self.subTotal - totalDis + self.calDeliveryFee()
 
     def calMallDollar(self):
-        """Calculate the mall dollar depending on the total price
+        """
+        Calculate the mall dollar depending on the total price
 
         Returns:
             mall dollar in floating number
@@ -71,7 +76,8 @@ class Order(object):
             return 0
 
     def calHashTotal(self):
-        """Add the item number as the hash total
+        """
+        Add up the goods number as the hash total
 
         Returns:
             hash total
@@ -82,7 +88,8 @@ class Order(object):
         return sum
 
     def calNewHashTotal(self):
-        """We use the sum of item number and check digit here
+        """
+        It uses the sum of item number and check digit as the NewHashTotal for the single order.
 
         Returns:
             new hash total in integer format
@@ -90,7 +97,8 @@ class Order(object):
         return int(self.orderNum.getItemNum()) + int(self.orderNum.getCheckDigit())
 
     def calProfit(self):
-        """Calculate the profit made from the orders
+        """
+        Calculate the profit made from the orders
 
         Returns:
             profit in floating number with 2 decimal places
@@ -98,11 +106,14 @@ class Order(object):
         cost = 0
         for i in self.goodsList:
             cost = cost + (int(i.getCost()) * int(i.getQuan()))
+        # remove the delivery fee cost and vip discount
         cost = cost - self.deliveryFee - self.VIPDis - self.VIP95Dis
         return round(self.total - cost, 2)
 
     def calComplete(self):
-        """Check if the order is completed according to the payment status and delivery status
+        """
+        Check if the order is completed according to the payment status and delivery status.
+        The order will be completed if and only if its payCollection is Received and the delivered is T.
 
         Returns:
             1 or -1 as status
@@ -113,10 +124,11 @@ class Order(object):
             return -1
 
     def getGoodsList(self):
-        """Get the item list
+        """
+        Get the goods list
 
         Returns:
-            item list
+            goods list
         """
         strV = ""
         for i in range(len(self.goodsList)):
@@ -124,8 +136,8 @@ class Order(object):
         return strV
 
     def getOrderNumber(self):
-        """"""
-        """Get and return the order number in String format
+        """
+        Get and return the order number in String format
 
         Returns:
             order number in String format
@@ -133,16 +145,17 @@ class Order(object):
         return str(self.orderNum)
 
     def getOrderNumberF(self):
-        """"""
-        """Get and return the order number
+        """
+        Get and return the order  in OrderNum Object format
 
         Returns:
-            the order number of this order
+            the order number object of this order
         """
         return self.orderNum
 
     def getTotal(self):
-        """Get and return the total price
+        """
+        Get and return the total price
 
         Returns:
             total price of this order
@@ -150,15 +163,17 @@ class Order(object):
         return self.total
 
     def getComplete(self):
-        """Get the complete status
+        """
+        Get the complete status
 
         Returns:
-            compelete status of this order
+            complete status of this order
         """
         return self.isComplete
 
     def getCompleteStr(self):
-        """Return the complete status
+        """
+        Convert and return the complete status in String format
 
         Returns:
             completion status in String format
@@ -180,7 +195,7 @@ class Order(object):
             Completion status: If the order is paid and delivered, it is completed.
 
         Returns:
-            The information above.
+            The string of the information
         """
         return "InvoiceNum: " + str(self.orderNum) + "\n" + \
                "OrderDate: " + str(self.orderDate) + "\n" + \
@@ -207,7 +222,7 @@ class Order(object):
             orderNum (Object): order number
             orderDate (string): the date of the order
             goodsList (string list): the items in an order
-            customer (string): the customer name
+            customer (Object): the customer
             paymentMethod (string): the payment method
             paymentCollection (string): whether the money transmission has finished
             delivered (string): whether the items are delivered

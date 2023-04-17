@@ -3,19 +3,23 @@ Group A member:
 CHENG MIN HSIU  19203144
 ZHANG Jiayi     19250568
 LIU Yulin       20250541
+This file including the Class of OrderNum which contains the information which should be stored in the order number.
+Includes the functions of calculating the next order number, picking random modulus Character and other specific
+functions.
 """
 
 import random
 
 
 class OrderNum(object):
-    """This is a new object class: order number
-
-    Args:
-        Order number (_type_): _description_
     """
+    The OrderNum Class containing the information of the order number. It contains the function of calculating the next
+    order number and check digit number and randomly picking the modulus character.
+    """
+
     def calDigitNum(self):
-        """This function will calculate the check digit
+        """
+        This function will calculate the check digit according to the modulus number
 
         Returns:
             int: check digit
@@ -29,7 +33,8 @@ class OrderNum(object):
                 return i
 
     def getModulusNum(self):
-        """This function is used to get the modulus number from input.
+        """
+        This function is used to get the corresponding modulus number according to the modulus character.
 
         Returns:
             int: the modulus number
@@ -42,11 +47,12 @@ class OrderNum(object):
             return 9
 
     def nextChar(self, alphabet):
-        """This function determins the character at the beginning of the order number.
-           If hasn't reach Z, return next letter of the alphabet. If Z, then start with AA. If ZZ, return A
+        """
+        This function determines the character at the beginning of the order number.
+        If it hasn't reached Z, return next letter of the alphabet. If Z, then start with AA. If ZZ, return A
 
         Args:
-            alphabet (alphabet): input the whole alphabet
+            alphabet (alphabet): input the alphabet part of the order number
 
         Returns:
             String: single letter or paired letters
@@ -63,7 +69,8 @@ class OrderNum(object):
                 return "A"
 
     def calNumber(self):
-        """This function can calculate the order number of the next order
+        """
+        This function can calculate the order number of the next order
 
         Returns:
             string: next order number
@@ -87,7 +94,8 @@ class OrderNum(object):
             return self.nextChar(alphabet), "000001"
 
     def randModulusChar(self):
-        """This function generate a modulus character randomly
+        """
+        This function picking a modulus character randomly
 
         Returns:
             string: the modulus number
@@ -95,7 +103,8 @@ class OrderNum(object):
         return random.choice('ABC')
 
     def getAlphabet(self):
-        """Get the alphabet
+        """
+        Get the alphabet
 
         Returns:
             alphabet
@@ -103,7 +112,8 @@ class OrderNum(object):
         return self.alphabet
 
     def getStaffNum(self):
-        """Get the staff number
+        """
+        Get the staff number
 
         Returns:
             int: staff number
@@ -111,7 +121,8 @@ class OrderNum(object):
         return self.staffNum
 
     def getModulusChar(self):
-        """Get the modulus character
+        """
+        Get the modulus character
 
         Returns:
             char: modulus character
@@ -119,7 +130,8 @@ class OrderNum(object):
         return self.modulusChar
 
     def getSeqNum(self):
-        """Get the order number
+        """
+        Get the order number
 
         Returns:
             string: order number
@@ -127,7 +139,8 @@ class OrderNum(object):
         return self.seqNum
 
     def getItemNum(self):
-        """Get the item number
+        """
+        Get the item number
 
         Returns:
             string: item number
@@ -135,7 +148,8 @@ class OrderNum(object):
         return self.itemNum
 
     def getCheckDigit(self):
-        """Get the check digit
+        """
+        Get the check digit
 
         Returns:
             int: check digit
@@ -143,12 +157,14 @@ class OrderNum(object):
         return self.checkDigit
 
     def getWholeNum(self):
-        """Get the fulfilled order number
+        """
+        Get the invoice order number
 
         Returns:
             string: order number
         """
-        return str(self.alphabet) + str(self.staffNum) + str(self.modulusChar) + str(self.seqNum) + str(self.itemNum) + str(self.checkDigit)
+        return str(self.alphabet) + str(self.staffNum) + str(self.modulusChar) + str(self.seqNum) + \
+               str(self.itemNum) + str(self.checkDigit)
 
     def __str__(self):
         """The order number in correct order and format
@@ -160,7 +176,8 @@ class OrderNum(object):
                + str(self.modulusChar) + str(self.seqNum) + str(self.itemNum) + "(" + str(self.checkDigit) + ")"
 
     def __init__(self, lastOrderNum, staffNum, itemNum):
-        """Initialize the variables
+        """
+        Initialize the class base on the input parameters
         """
         self.lastOrderNum = lastOrderNum
         self.alphabet, self.seqNum = self.calNumber()
@@ -168,5 +185,3 @@ class OrderNum(object):
         self.modulusChar = self.randModulusChar()
         self.itemNum = itemNum
         self.checkDigit = self.calDigitNum()
-
-
