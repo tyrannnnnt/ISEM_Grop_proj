@@ -473,7 +473,7 @@ while not isExit:
         path = input("Please input the expect path, "
                      "if you input -1, the path will be default: zzyTest/OutputCustomerFile.xlsx\n")
         if path == "-1":
-            path = "zzyTest/OutputCustomerFile.xlsx"
+            path = "zzyTest/OutputCustomerFile.txt"
         try:
             printCustomerList(theCustomerList, path)
         except IOError:
