@@ -1,0 +1,18 @@
+Number_of_customers       15
+Customer Name             Customer Address
+---------------------
+Tristan Dungey            PO Box 68312
+Teresa Bremner            PO Box 3088
+Mureil Antoons            PO Box 13897
+Xerxes Pierucci           Suite 8
+Isaak Simoneschi          Suite 71
+Dirk Toffel               PO Box 97328
+Bianka Pendre             PO Box 91677
+Tamarra Akenhead          Suite 36
+Dotty Guilloneau          10th Floor
+Kayle Lambole             Suite 9
+Bev Trevna                Apt 1564
+Evelyn Powers             17th Floor
+Eugene Belamy             PO Box 48352
+Mel Bernardo              Suite 81
+Collin Mandy              9th Floor
