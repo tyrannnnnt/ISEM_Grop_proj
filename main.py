@@ -186,6 +186,15 @@ def readOrder(fileName, totalGoodsList, customerList):
         items = data[i][2].replace(", ", ",").split(",")
         length = len(items)
         index = 0
+        if(data[i][5] != 'Credit Card' and data[i][5] != 'FPS' and data[i][5] != 'E Wallet' and data[i][5] != 'Mobile'):
+            print("Caution! Please input valid payment method")
+            exit()
+        if(data[i][6] != 'In Transit' and data[i][6] != 'Received'):
+            print("Caution! The payment status should be either in transition or received")
+            exit()
+        if(data[i][7] != 'F' and data[i][7] != 'T'):
+            print("Caution! The status of delivery should be either true or false")
+            exit()
         # if there are more than 9 goods in the order
         while length > 9:
             # read the corresponding goods
