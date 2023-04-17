@@ -1,3 +1,9 @@
+"""
+Group A member:
+CHENG MIN HSIU  19203144
+ZHANG Jiayi     19250568
+LIU Yulin       20250541
+"""
 import math
 
 

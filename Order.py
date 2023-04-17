@@ -1,3 +1,12 @@
+"""
+Group A member:
+CHENG MIN HSIU  19203144
+ZHANG Jiayi     19250568
+LIU Yulin       20250541
+This file including the Class of order, it stores the information contained in the input order file. It contains some
+functions
+"""
+
 from datetime import datetime
 import pandas as pd
 
@@ -173,7 +182,7 @@ class Order(object):
         Returns:
             The information above.
         """
-        return "OrderNum: " + str(self.orderNum) + "\n" + \
+        return "InvoiceNum: " + str(self.orderNum) + "\n" + \
                "OrderDate: " + str(self.orderDate) + "\n" + \
                "Goods: " + str(self.getGoodsList()) + "\n" + \
                "Customer: " + str(self.customer) + "\n" + \
@@ -186,7 +195,6 @@ class Order(object):
                "The order profit: " + str(self.profit) + "\n" + \
                "The payment method: " + str(self.paymentMethod) + "\n" + \
                "The payment collection: " + str(self.paymentCollection) + "\n" + \
-               "The profit of the order: " + str(self.profit) + "\n" +\
                "Delivered or not: " + str(self.delivered) + "\n" + \
                "Complete or not: " + str(self.getCompleteStr()) + "\n" + \
                "-------------------------------------------------------------------------\n"

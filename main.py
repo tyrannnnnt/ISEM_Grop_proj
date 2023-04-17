@@ -1,4 +1,14 @@
-# Please refer to "README.md" before running the program
+"""
+Group A member:
+CHENG MIN HSIU  19203144
+ZHANG Jiayi     19250568
+LIU Yulin       20250541
+This project aims to provide the Flexible Hashing and Checking Digit creation function and is able to verify the
+validity of the Invoice produced by the online ordering systems. The deatial information of the order are also provided.
+Please make sure your environment exist "openpyxl" model for handling the Excel(.xlsx) file. You can read the
+"README.md" file for the instruction of the inputting file format and the details of the output and the functions of
+the project.
+"""
 
 from Order import *
 from OrderNum import *
@@ -11,12 +21,14 @@ def readCustomer(fileName):
     """Read in the customer names from excel
     
     Args:
-        fileName(string): the file to read
+        fileName(string): the file path to read
 
     Returns:
         list: customers
     """
+    # read the Excel file
     customerFile = pd.read_excel(fileName, engine='openpyxl')
+    # get values
     data = customerFile.values
     storeList = []
     for i in range(customerFile.shape[0]):
@@ -29,12 +41,14 @@ def readStaff(fileName):
     """Read in the staff names from excel
     
     Args:
-        fileName(string): the file to read
+        fileName(string): the file path to read
 
     Returns:
         list: staffs
     """
+    # read the Excel file
     staffFile = pd.read_excel(fileName, engine='openpyxl')
+    # get values
     data = staffFile.values
     storeList = []
     for i in range(staffFile.shape[0]):
@@ -47,12 +61,14 @@ def readGoods(fileName):
     """Read in the item list
     
     Args:
-        fileName(string): the file to read
+        fileName(string): the file path to read
 
     Returns:
         list: items
     """
+    # read Excel file
     goodsFile = pd.read_excel(fileName, engine='openpyxl')
+    # get values from the file
     data = goodsFile.values
     totalGoodsList = []
     for i in range(goodsFile.shape[0]):
@@ -153,27 +169,40 @@ def readOrder(fileName, totalGoodsList, customerList):
     Returns:
         _type_: _description_
     """
+    # read file from the Excel
     orderFile = pd.read_excel(fileName, engine='openpyxl')
+    # get values from the file
     data = orderFile.values
+    # get the last order number from the first order
     lastOrderNum = data[0][0]
+    # input goods List
     goodsList = []
+    # the List store the generated order number
     storeList = []
+    # the count for actual order number
     count = 0
+    # for each row
     for i in range(orderFile.shape[0]):
         items = data[i][2].replace(", ", ",").split(",")
         length = len(items)
         index = 0
+        # if there are more than 9 goods in the order
         while length > 9:
+            # read the corresponding goods
             goodsList.append(items[(index * 9):((index + 1) * 9)])
             # lastOrderNum, staffNum, itemNum
             newOrder = OrderNum(lastOrderNum, data[i][1], 9)
             lastOrderNum = str(newOrder)
             orderGoods = []
             for j in goodsList[count]:
+                # remove space behind comma
                 identity = j.rsplit(" ", 1)[0]
+                # if is goods number
                 if identity.isdigit():
                     theGood = copyGood(matchNumber(identity, totalGoodsList))
+                # if is goods name
                 else:
+                    # do the deep copy
                     theGood = copyGood(matchName(identity, totalGoodsList))
                     try:
                         theGood.setQuan(j.rsplit(" ", 1)[1])
@@ -188,10 +217,12 @@ def readOrder(fileName, totalGoodsList, customerList):
             index = index + 1
             length = length - 9
             count = count + 1
+
+        # if remain goods less than 9
         if length > 0:
             goodsList.append(items[(index * 9):])
-            # lastOrderNum, staffNum, itemNum
             try:
+                # lastOrderNum, staffNum, itemNum
                 newOrder = OrderNum(lastOrderNum, data[i][1], len(goodsList[count]))
                 lastOrderNum = str(newOrder)
                 orderGoods = []
@@ -205,8 +236,8 @@ def readOrder(fileName, totalGoodsList, customerList):
                     orderGoods.append(theGood)
             except ValueError:
                 print(ValueError)
-                print(
-                    "Please check your data in last order number, staff number and item number. It cannot be empty or in wrong format")
+                print("Please check your data in last order number, staff number and item number. It cannot be empty or"
+                      " in wrong format")
                 exit(1)
             except IndexError:
                 print(IndexError)
